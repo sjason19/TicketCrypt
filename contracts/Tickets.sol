@@ -1,14 +1,16 @@
 pragma solidity ^0.4.11;
 
-uint ticketEvent;
-uint numberOfTickets;
-uint maxAmountOfGaTickets = 100;
-uint maxAmountOfVIPTickets = 100;
-uint totalTicketsPurchase;
-uint expiryDate;
+contract TicketFactory {
 
+  event NewTicket(uint ticketId, string event, uint ticketHash);
 
-contract Tickets {
+  uint ticketEvent;
+  uint numberOfTickets;
+  uint maxAmountOfGaTickets = 100;
+  uint maxAmountOfVIPTickets = 100;
+  uint totalTicketsPurchase;
+  uint expiryDate;
+
    address owner;
    function Tickets(){
       owner = msg.sender;
