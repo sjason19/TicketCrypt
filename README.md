@@ -10,10 +10,10 @@
     ```
 
 2. Install dependencies
-
-```
-npm install
-```
+    
+    ```
+    npm install
+    ```
 
 3. Run the development console.
 	
