@@ -3,7 +3,7 @@
 ## Dev
 
 ### Test Accounts
-[https://github.com/trufflesuite/ganache-cli](https://github.com/trufflesuite/ganache-cli)
+[ganache-cli documentation](https://github.com/trufflesuite/ganache-cli)
 ```
 npm install -g ganache-cli
 ganache-cli
