@@ -9,7 +9,13 @@
     npm install -g truffle
     ```
 
-2. Run the development console.
+2. Install dependencies
+
+```
+npm install
+```
+
+3. Run the development console.
 	
 	```
     truffle develop
@@ -29,7 +35,7 @@
     npm run start
     ```
 
-8. To build the application for production, use the build command. A production build will be in the build_webpack folder.
+6. To build the application for production, use the build command. A production build will be in the build_webpack folder.
     
     ```
     npm run build
