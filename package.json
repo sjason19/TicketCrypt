@@ -1,19 +1,31 @@
 {
   "name": "ticketcrypt",
   "version": "1.0.0",
-  "description": "An Ethereum dApp aimed to verify tickets for hosts and customers.  ",
+  "private": true,
+  "description": "An Ethereum dApp aimed to verify tickets for hosts and customers",
+  "author": "Jason Smith & Patrick Lin",
+  "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sjason19/TicketCrypt.git"
   },
-  "author": "Jason Smith",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/sjason19/TicketCrypt/issues"
   },
-  "homepage": "https://github.com/sjason19/TicketCrypt#readme"
+  "homepage": "https://github.com/sjason19/TicketCrypt#readme",
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.1.0"
+  },
+  "devDependencies": {
+    "truffle": "^4.0.6"
+  }
 }
