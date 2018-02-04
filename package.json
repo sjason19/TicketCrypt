@@ -1,0 +1,19 @@
+{
+  "name": "ticketcrypt",
+  "version": "1.0.0",
+  "description": "An Ethereum dApp aimed to verify tickets for hosts and customers.  ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sjason19/TicketCrypt.git"
+  },
+  "author": "Jason Smith",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sjason19/TicketCrypt/issues"
+  },
+  "homepage": "https://github.com/sjason19/TicketCrypt#readme"
+}
