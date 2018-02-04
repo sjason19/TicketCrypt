@@ -9,7 +9,7 @@ contract TicketCrypt is Ownable {
 
   struct Ticket {
     string name;                                    // Ticket tier/description (Tier 1, Tier 2 etc..)
-    uint16 price;                                   // Ticket price
+    uint price;                                     // Ticket price
     uint32 available;                               // Available tickets
     uint32 sold;                                    // Tickets sold
     mapping (address => uint) ticketToOwner;        // Maps the tickets to the contract owner
@@ -17,7 +17,7 @@ contract TicketCrypt is Ownable {
 
   Ticket[] public tickets;
 
-  function _createEvent(string _name, uint16 _price, uint32 _available) internal {
+  function _createEvent(string _name, uint _price, uint32 _available) internal {
     eventName = _name;
     Ticket storage t = tickets[tickets.length];
     t.name = _name;
@@ -25,8 +25,4 @@ contract TicketCrypt is Ownable {
     t.available = _available;
     t.sold = 0;
   }
-
-
-
-
 }

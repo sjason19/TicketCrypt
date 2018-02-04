@@ -10,7 +10,7 @@ contract TicketTransactions is TicketCrypt {
     struct TicketSales {
       address owner;                          // Owner of the sale
       bool saleType;                          // Buy or Sell Ticket (Buy => true, Sell => false)
-      uint16 price;                           // Price the ticket is listed for
+      uint price;                             // Price the ticket is listed for
       uint ticketID;                          // Type of ticket being sold
     }
 
@@ -28,6 +28,4 @@ contract TicketTransactions is TicketCrypt {
       t.sold++;
       PurchaseTicket(_ticketId, msg.sender, msg.value);
     }
-
-
 }
