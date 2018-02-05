@@ -51,13 +51,15 @@ npm install -g ganache-cli
 ganache-cli
 ```
 
-2. Set MetaMask to Private Network
+2. Import a test account into Metamask
+
+3. Set MetaMask to Private Network
 
 ```
 new RPC network: localhost:127.0.0.1:8545
 ```
 
-3. Uncomment code from truffle.js/truffle.config.js
+4. Uncomment code from truffle.js/truffle.config.js
 
 Windows use ```truffle.config.js```
 Mac/Linux use ```truffle.js```
@@ -76,7 +78,7 @@ module.exports = {
    }
 };
 ```
-4. Change web3 network
+5. Change web3 network
 
 ```
 cd TicketCrypt/src/utils/getWeb3.js
