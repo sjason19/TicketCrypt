@@ -7,6 +7,9 @@ contract TicketCrypt is Ownable {
   string eventName;
   address public eventHost;
 
+  // using this variable for testing
+  uint ticketData;
+
   struct Ticket {
     string name;                                    // Ticket tier/description (Tier 1, Tier 2 etc..)
     uint price;                                     // Ticket price
@@ -24,5 +27,14 @@ contract TicketCrypt is Ownable {
     t.price = _price;
     t.available = _available;
     t.sold = 0;
+  }
+
+  // using these functions for testing
+  function set(uint x) public {
+    ticketData = x;
+  }
+
+  function get() public view returns (uint) {
+    return ticketData;
   }
 }
