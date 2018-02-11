@@ -13,6 +13,7 @@
     
     ```
     npm install
+    npm install material-ui
     ```
 
 3. Run the development console.
