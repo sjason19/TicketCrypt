@@ -20,6 +20,13 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit * 10,
   },
+  containerBottom: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    marginTop: theme.spacing.unit * 3,
+    marginBottom: theme.spacing.unit * 8,
+    marginLeft: theme.spacing.unit * 10,
+  },
   formControl: {
     margin: theme.spacing.unit,
   },
@@ -44,6 +51,20 @@ const styles = theme => ({
     fontSize: 16,
     padding: '10px 12px',
     width: '600px',
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    '&:focus': {
+      borderColor: '#80bdff',
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+    },
+  },
+  textFieldInputSmall: {
+    borderRadius: 4,
+    backgroundColor: theme.palette.common.white,
+    border: '2px solid #ced4da',
+    fontSize: 16,
+    padding: '10px 12px',
+    width: '200px',
+    marginRight: '15px',
     transition: theme.transitions.create(['border-color', 'box-shadow']),
     '&:focus': {
       borderColor: '#80bdff',
@@ -242,7 +263,92 @@ class App extends Component {
                   }}
                 />
               </div>
+              <div className={classes.container}>
+                   <TextField
+                     defaultValue="Enter Description..."
+                     label="Event Description"
+                     InputProps={{
+                       disableUnderline: true,
+                       classes: {
+                         root: classes.textFieldRoot,
+                         input: classes.textFieldInput,
+                       },
+                     }}
+                     InputLabelProps={{
+                       shrink: true,
+                       className: classes.textFieldFormLabel,
+                     }}
+                   />
+              </div>
+              <div className={classes.containerBottom}>
+                   <TextField
+                     defaultValue="Who's organizing the event?"
+                     label="Organizer Name"
+                     InputProps={{
+                       disableUnderline: true,
+                       classes: {
+                         root: classes.textFieldRoot,
+                         input: classes.textFieldInput,
+                       },
+                     }}
+                     InputLabelProps={{
+                       shrink: true,
+                       className: classes.textFieldFormLabel,
+                     }}
+                   />
+             </div>
 
+             <div className="event-header">
+               <h1>Create Tickets</h1>
+             </div>
+
+             <div className={classes.containerBottom}>
+                  <TextField
+                    defaultValue="GA, Early Bird..."
+                    label="Ticket Name"
+                    InputProps={{
+                      disableUnderline: true,
+                      classes: {
+                        root: classes.textFieldRoot,
+                        input: classes.textFieldInputSmall,
+                      },
+                    }}
+                    InputLabelProps={{
+                      shrink: true,
+                      className: classes.textFieldFormLabel,
+                    }}
+                  />
+                  <TextField
+                    defaultValue="100"
+                    label="Quantity Available"
+                    InputProps={{
+                      disableUnderline: true,
+                      classes: {
+                        root: classes.textFieldRoot,
+                        input: classes.textFieldInputSmall,
+                      },
+                    }}
+                    InputLabelProps={{
+                      shrink: true,
+                      className: classes.textFieldFormLabel,
+                    }}
+                  />
+                  <TextField
+                    defaultValue="$"
+                    label="Price"
+                    InputProps={{
+                      disableUnderline: true,
+                      classes: {
+                        root: classes.textFieldRoot,
+                        input: classes.textFieldInputSmall,
+                      },
+                    }}
+                    InputLabelProps={{
+                      shrink: true,
+                      className: classes.textFieldFormLabel,
+                    }}
+                  />
+            </div>
       </div>
     );
   }
