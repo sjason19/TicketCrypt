@@ -13,7 +13,6 @@
     
     ```
     npm install
-    npm install material-ui
     ```
 
 3. Run the development console.
@@ -95,3 +94,6 @@ Contract not deployed to network? - turn off metamask
 
 Why am I getting a `gyp: No Xcode or CLT version detected!` error after running npm install? 
 - See this [post](https://stackoverflow.com/questions/27665426/trying-to-install-bcrypt-into-node-project-node-set-up-issues)
+
+Working on a branch and missing npm dependencies?
+Run  `npm install <insert-library>`
