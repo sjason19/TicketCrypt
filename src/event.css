@@ -17,8 +17,9 @@ code {
 }
 
 .event-header h1 {
-    padding-left: 2em;
+    padding-left: 80px;
 }
+
 
 .container {
   box-sizing: border-box;
