@@ -1,11 +1,24 @@
 import React, { Component } from 'react'
 import TicketCryptContract from '../build/contracts/TicketCrypt.json'
 import getWeb3 from './utils/getWeb3'
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+import Button from 'material-ui/Button';
+
 
 import './css/oswald.css'
 import './css/open-sans.css'
 import './css/pure-min.css'
-import './App.css'
+import './css/App.css'
+
+const styles = theme => ({
+  button: {
+    margin: theme.spacing.unit,
+  },
+  input: {
+    display: 'none',
+  },
+});
 
 class App extends Component {
   constructor(props) {
@@ -67,11 +80,21 @@ class App extends Component {
     })
   }
 
+  onButtonPress() {
+    this.props.navigator.push({
+      id: 'EventCreator'
+    });
+  }
+
   render() {
+    const { classes } = this.props;
     return (
       <div className="App">
         <nav className="navbar pure-menu pure-menu-horizontal">
             <a href="#" className="pure-menu-heading pure-menu-link">Truffle Box</a>
+            <Button onPress={this.onButtonPress.bind(this)} variant="raised" color="primary" className={classes.button}>
+              New Event
+            </Button>
         </nav>
 
         <main className="container">
@@ -91,4 +114,8 @@ class App extends Component {
   }
 }
 
-export default App
+App.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(App);

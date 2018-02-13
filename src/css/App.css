@@ -16,6 +16,10 @@ code {
   background: #eee;
 }
 
+.event-header h1 {
+    padding-left: 2em;
+}
+
 .container {
   box-sizing: border-box;
   width: 100%;
