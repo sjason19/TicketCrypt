@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
+import EventCreator from './EventCreator'
 
 ReactDOM.render(
-  <App />,
+  <EventCreator />,
   document.getElementById('root')
 );

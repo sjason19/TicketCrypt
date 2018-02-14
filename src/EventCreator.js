@@ -8,6 +8,9 @@ import TextField from 'material-ui/TextField';
 import { FormControl } from 'material-ui/Form';
 import purple from 'material-ui/colors/purple';
 import Button from 'material-ui/Button';
+const Datetime = require('react-datetime')
+const moment = require('moment')
+
 
 import './css/oswald.css'
 import './css/open-sans.css'
@@ -87,6 +90,16 @@ const styles = theme => ({
   }
 });
 
+const defaultEvent = {
+  name: 'Enter Title',
+  location: 'Enter Location',
+  start: "2018-02-02", // moment("2017-12-25", "YYYY-MM-DD"),
+  end: "2018-03-03", // moment().add(1, 'day').add(4, 'hour').startOf('hour').unix()
+  created: moment().unix(),
+  price: '',
+  organizer: ''
+}
+
 
 class EventCreator extends Component {
   constructor(props) {
@@ -94,7 +107,8 @@ class EventCreator extends Component {
 
     this.state = {
       storageValue: 0,
-      web3: null
+      web3: null,
+      event: defaultEvent
     }
   }
 
@@ -150,6 +164,8 @@ class EventCreator extends Component {
 
   render() {
      const { classes } = this.props;
+     const { event } = this.state;
+
     return (
       <div className="EventCreator">
         <nav className="navbar pure-menu pure-menu-horizontal">
@@ -171,7 +187,7 @@ class EventCreator extends Component {
 
         <div className={classes.container}>
              <TextField
-               defaultValue="Enter Title"
+               defaultValue={event.name}
                label="Event Title"
                InputProps={{
                  disableUnderline: true,
@@ -188,7 +204,7 @@ class EventCreator extends Component {
            </div>
            <div className={classes.container}>
                 <TextField
-                  defaultValue="Enter Location"
+                  defaultValue={event.location}
                   label="Event Location"
                   InputProps={{
                     disableUnderline: true,
@@ -209,7 +225,7 @@ class EventCreator extends Component {
                   id="date"
                   label="STARTS"
                   type="date"
-                  defaultValue="2017-05-24"
+                  defaultValue={event.start}
                   InputProps={{
                     classes: {
                       root: classes.dateField,
