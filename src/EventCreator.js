@@ -291,6 +291,7 @@ class EventCreator extends Component {
                    <TextField
                      defaultValue={event.description}
                      label="Event Description"
+                     onChange={this.onDescriptionChange.bind(this)}
                      InputProps={{
                        disableUnderline: true,
                        classes: {
@@ -383,8 +384,13 @@ class EventCreator extends Component {
       </div>
     );
   }
-}
+  onDescriptionChange(event) {
+    const {meetup} = this.state;
+    meetup.description = event.target.value.trim();
+    this.setState({meetup});
+  }
 
+}
 EventCreator.propTypes = {
   classes: PropTypes.object.isRequired,
 };
