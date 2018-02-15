@@ -95,9 +95,13 @@ const defaultEvent = {
   location: 'Enter Location',
   start: "2018-02-02", // moment("2017-12-25", "YYYY-MM-DD"),
   end: "2018-03-03", // moment().add(1, 'day').add(4, 'hour').startOf('hour').unix()
+  startTime:"07:30",
+  endTime:"07:30",
   created: moment().unix(),
-  price: '',
-  organizer: ''
+  price: '$',
+  organizer: 'Who\'s organizing the event?',
+  description: 'Enter Description...',
+  type: 'GA, Early Bird...'
 }
 
 
@@ -240,7 +244,7 @@ class EventCreator extends Component {
                   id="time"
                   label=" "
                   type="time"
-                  defaultValue="07:30"
+                  defaultValue={event.endTime}
                   className={classes.textField}
                   InputProps={{
                     classes: {
@@ -256,7 +260,7 @@ class EventCreator extends Component {
                   id="date"
                   label="ENDS"
                   type="date"
-                  defaultValue="2017-05-24"
+                  defaultValue={event.end}
                   InputProps={{
                     classes: {
                       root: classes.dateField,
@@ -271,7 +275,7 @@ class EventCreator extends Component {
                   id="time"
                   label=" "
                   type="time"
-                  defaultValue="07:30"
+                  defaultValue={event.endTime}
                   InputProps={{
                     classes: {
                       root: classes.timeField,
@@ -285,7 +289,7 @@ class EventCreator extends Component {
               </div>
               <div className={classes.container}>
                    <TextField
-                     defaultValue="Enter Description..."
+                     defaultValue={event.description}
                      label="Event Description"
                      InputProps={{
                        disableUnderline: true,
@@ -302,7 +306,7 @@ class EventCreator extends Component {
               </div>
               <div className={classes.containerBottom}>
                    <TextField
-                     defaultValue="Who's organizing the event?"
+                     defaultValue={event.organizer}
                      label="Organizer Name"
                      InputProps={{
                        disableUnderline: true,
@@ -324,7 +328,7 @@ class EventCreator extends Component {
 
              <div className={classes.containerBottom}>
                   <TextField
-                    defaultValue="GA, Early Bird..."
+                    defaultValue={event.type}
                     label="Ticket Name"
                     InputProps={{
                       disableUnderline: true,
@@ -354,7 +358,7 @@ class EventCreator extends Component {
                     }}
                   />
                   <TextField
-                    defaultValue="$"
+                    defaultValue={event.price}
                     label="Price"
                     InputProps={{
                       disableUnderline: true,
