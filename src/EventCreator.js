@@ -8,6 +8,9 @@ import TextField from 'material-ui/TextField';
 import { FormControl } from 'material-ui/Form';
 import purple from 'material-ui/colors/purple';
 import Button from 'material-ui/Button';
+const Datetime = require('react-datetime')
+const moment = require('moment')
+
 
 import './css/oswald.css'
 import './css/open-sans.css'
@@ -87,6 +90,21 @@ const styles = theme => ({
   }
 });
 
+const defaultEvent = {
+  name: 'Enter Title',
+  location: 'Enter Location',
+  start: "2018-02-02", // moment("2017-12-25", "YYYY-MM-DD"),
+  end: "2018-03-03", // moment().add(1, 'day').add(4, 'hour').startOf('hour').unix()
+  startTime:"07:30",
+  endTime:"07:30",
+  created: moment().unix(),
+  price: '0',
+  organizer: 'Who\'s organizing the event?',
+  description: 'Enter Description...',
+  available: '100',
+  type: 'GA, Early Bird...'
+}
+
 
 class EventCreator extends Component {
   constructor(props) {
@@ -94,7 +112,8 @@ class EventCreator extends Component {
 
     this.state = {
       storageValue: 0,
-      web3: null
+      web3: null,
+      eventObj: defaultEvent
     }
   }
 
@@ -150,6 +169,8 @@ class EventCreator extends Component {
 
   render() {
      const { classes } = this.props;
+     const { eventObj } = this.state;
+
     return (
       <div className="EventCreator">
         <nav className="navbar pure-menu pure-menu-horizontal">
@@ -171,7 +192,7 @@ class EventCreator extends Component {
 
         <div className={classes.container}>
              <TextField
-               defaultValue="Enter Title"
+               defaultValue={eventObj.name}
                label="Event Title"
                InputProps={{
                  disableUnderline: true,
@@ -184,11 +205,12 @@ class EventCreator extends Component {
                  shrink: true,
                  className: classes.textFieldFormLabel,
                }}
+               onChange={this.onEventNameChange.bind(this)}
              />
            </div>
            <div className={classes.container}>
                 <TextField
-                  defaultValue="Enter Location"
+                  defaultValue={eventObj.location}
                   label="Event Location"
                   InputProps={{
                     disableUnderline: true,
@@ -209,7 +231,7 @@ class EventCreator extends Component {
                   id="date"
                   label="STARTS"
                   type="date"
-                  defaultValue="2017-05-24"
+                  defaultValue={eventObj.start}
                   InputProps={{
                     classes: {
                       root: classes.dateField,
@@ -224,7 +246,7 @@ class EventCreator extends Component {
                   id="time"
                   label=" "
                   type="time"
-                  defaultValue="07:30"
+                  defaultValue={eventObj.endTime}
                   className={classes.textField}
                   InputProps={{
                     classes: {
@@ -240,7 +262,7 @@ class EventCreator extends Component {
                   id="date"
                   label="ENDS"
                   type="date"
-                  defaultValue="2017-05-24"
+                  defaultValue={eventObj.end}
                   InputProps={{
                     classes: {
                       root: classes.dateField,
@@ -255,7 +277,7 @@ class EventCreator extends Component {
                   id="time"
                   label=" "
                   type="time"
-                  defaultValue="07:30"
+                  defaultValue={eventObj.endTime}
                   InputProps={{
                     classes: {
                       root: classes.timeField,
@@ -269,8 +291,9 @@ class EventCreator extends Component {
               </div>
               <div className={classes.container}>
                    <TextField
-                     defaultValue="Enter Description..."
+                     defaultValue={eventObj.description}
                      label="Event Description"
+                     onChange={this.onDescriptionChange.bind(this)}
                      InputProps={{
                        disableUnderline: true,
                        classes: {
@@ -286,7 +309,7 @@ class EventCreator extends Component {
               </div>
               <div className={classes.containerBottom}>
                    <TextField
-                     defaultValue="Who's organizing the event?"
+                     defaultValue={eventObj.organizer}
                      label="Organizer Name"
                      InputProps={{
                        disableUnderline: true,
@@ -308,7 +331,7 @@ class EventCreator extends Component {
 
              <div className={classes.containerBottom}>
                   <TextField
-                    defaultValue="GA, Early Bird..."
+                    defaultValue={eventObj.type}
                     label="Ticket Name"
                     InputProps={{
                       disableUnderline: true,
@@ -323,7 +346,7 @@ class EventCreator extends Component {
                     }}
                   />
                   <TextField
-                    defaultValue="100"
+                    defaultValue={eventObj.available}
                     label="Quantity Available"
                     InputProps={{
                       disableUnderline: true,
@@ -338,7 +361,7 @@ class EventCreator extends Component {
                     }}
                   />
                   <TextField
-                    defaultValue="$"
+                    defaultValue={eventObj.price}
                     label="Price"
                     InputProps={{
                       disableUnderline: true,
@@ -357,14 +380,72 @@ class EventCreator extends Component {
              variant="raised"
              color="primary"
              className={classes.buttonStyle}
+             onClick={this.handleSubmit.bind(this)}
              >
               Create Event
             </Button>
       </div>
     );
   }
+
+  onEventNameChange(event) {
+    const {eventObj} = this.state;
+    eventObj.name = event.target.value.trim();
+    this.setState({eventObj});
+  }
+
+  onLocationChange(event) {
+    const {eventObj} = this.state;
+    eventObj.location = event.target.value.trim();
+    this.setState({eventObj});
+  }
+
+  onDescriptionChange(event) {
+    const {eventObj} = this.state;
+    eventObj.description = event.target.value.trim();
+    this.setState({eventObj});
+  }
+
+// Submit event
+  async handleSubmit(event) {
+  event.preventDefault()
+
+  const {eventObj} = this.state
+  
+  if (!eventObj.title) {
+    alert('Title is required')
+    return false
+  }
+
+
+
+  // Setup contract connection
+  const contract = require('truffle-contract')
+  const ticketCrypt = contract(TicketCryptContract)
+  ticketCrypt.setProvider(this.state.web3.currentProvider)
+
+  // Declaring this for later so we can chain functions on TicketCrypt.
+  var ticketCryptInstance;
+
+  // Get accounts.
+  this.state.web3.eth.getAccounts((error, accounts) => {
+    ticketCrypt.deployed().then((instance) => {
+      ticketCryptInstance = instance
+
+      // Stores a given value, 5 by default.
+      return ticketCryptInstance._createEvent(eventObj.name, eventObj.price, eventObj.available, {from: accounts[0]})
+    }).then((result) => {
+      // Get the value from the contract to prove it worked.
+      return ticketCryptInstance.getEvent().call(accounts[0])
+    }).then((result) => {
+      // Update state with the result.
+      return this.setState({ storageValue: result.c[0] })
+    })
+  })
+// -------------------------------------------------------------
 }
 
+}
 EventCreator.propTypes = {
   classes: PropTypes.object.isRequired,
 };

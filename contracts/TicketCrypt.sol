@@ -29,6 +29,10 @@ contract TicketCrypt is Ownable {
     t.sold = 0;
   }
 
+  function getEvent() public view returns (string) {
+    return eventName;
+  }
+
   // using these functions for testing
   function set(uint x) public {
     ticketData = x;
