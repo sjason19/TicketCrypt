@@ -98,9 +98,10 @@ const defaultEvent = {
   startTime:"07:30",
   endTime:"07:30",
   created: moment().unix(),
-  price: '$',
+  price: '0',
   organizer: 'Who\'s organizing the event?',
   description: 'Enter Description...',
+  available: '100',
   type: 'GA, Early Bird...'
 }
 
@@ -112,7 +113,7 @@ class EventCreator extends Component {
     this.state = {
       storageValue: 0,
       web3: null,
-      event: defaultEvent
+      eventObj: defaultEvent
     }
   }
 
@@ -168,7 +169,7 @@ class EventCreator extends Component {
 
   render() {
      const { classes } = this.props;
-     const { event } = this.state;
+     const { eventObj } = this.state;
 
     return (
       <div className="EventCreator">
@@ -191,7 +192,7 @@ class EventCreator extends Component {
 
         <div className={classes.container}>
              <TextField
-               defaultValue={event.name}
+               defaultValue={eventObj.name}
                label="Event Title"
                InputProps={{
                  disableUnderline: true,
@@ -204,11 +205,12 @@ class EventCreator extends Component {
                  shrink: true,
                  className: classes.textFieldFormLabel,
                }}
+               onChange={this.onEventNameChange.bind(this)}
              />
            </div>
            <div className={classes.container}>
                 <TextField
-                  defaultValue={event.location}
+                  defaultValue={eventObj.location}
                   label="Event Location"
                   InputProps={{
                     disableUnderline: true,
@@ -229,7 +231,7 @@ class EventCreator extends Component {
                   id="date"
                   label="STARTS"
                   type="date"
-                  defaultValue={event.start}
+                  defaultValue={eventObj.start}
                   InputProps={{
                     classes: {
                       root: classes.dateField,
@@ -244,7 +246,7 @@ class EventCreator extends Component {
                   id="time"
                   label=" "
                   type="time"
-                  defaultValue={event.endTime}
+                  defaultValue={eventObj.endTime}
                   className={classes.textField}
                   InputProps={{
                     classes: {
@@ -260,7 +262,7 @@ class EventCreator extends Component {
                   id="date"
                   label="ENDS"
                   type="date"
-                  defaultValue={event.end}
+                  defaultValue={eventObj.end}
                   InputProps={{
                     classes: {
                       root: classes.dateField,
@@ -275,7 +277,7 @@ class EventCreator extends Component {
                   id="time"
                   label=" "
                   type="time"
-                  defaultValue={event.endTime}
+                  defaultValue={eventObj.endTime}
                   InputProps={{
                     classes: {
                       root: classes.timeField,
@@ -289,7 +291,7 @@ class EventCreator extends Component {
               </div>
               <div className={classes.container}>
                    <TextField
-                     defaultValue={event.description}
+                     defaultValue={eventObj.description}
                      label="Event Description"
                      onChange={this.onDescriptionChange.bind(this)}
                      InputProps={{
@@ -307,7 +309,7 @@ class EventCreator extends Component {
               </div>
               <div className={classes.containerBottom}>
                    <TextField
-                     defaultValue={event.organizer}
+                     defaultValue={eventObj.organizer}
                      label="Organizer Name"
                      InputProps={{
                        disableUnderline: true,
@@ -329,7 +331,7 @@ class EventCreator extends Component {
 
              <div className={classes.containerBottom}>
                   <TextField
-                    defaultValue={event.type}
+                    defaultValue={eventObj.type}
                     label="Ticket Name"
                     InputProps={{
                       disableUnderline: true,
@@ -344,7 +346,7 @@ class EventCreator extends Component {
                     }}
                   />
                   <TextField
-                    defaultValue="100"
+                    defaultValue={eventObj.available}
                     label="Quantity Available"
                     InputProps={{
                       disableUnderline: true,
@@ -359,7 +361,7 @@ class EventCreator extends Component {
                     }}
                   />
                   <TextField
-                    defaultValue={event.price}
+                    defaultValue={eventObj.price}
                     label="Price"
                     InputProps={{
                       disableUnderline: true,
@@ -378,17 +380,70 @@ class EventCreator extends Component {
              variant="raised"
              color="primary"
              className={classes.buttonStyle}
+             onClick={this.handleSubmit.bind(this)}
              >
               Create Event
             </Button>
       </div>
     );
   }
-  onDescriptionChange(event) {
-    const {meetup} = this.state;
-    meetup.description = event.target.value.trim();
-    this.setState({meetup});
+
+  onEventNameChange(event) {
+    const {eventObj} = this.state;
+    eventObj.name = event.target.value.trim();
+    this.setState({eventObj});
   }
+
+  onLocationChange(event) {
+    const {eventObj} = this.state;
+    eventObj.location = event.target.value.trim();
+    this.setState({eventObj});
+  }
+
+  onDescriptionChange(event) {
+    const {eventObj} = this.state;
+    eventObj.description = event.target.value.trim();
+    this.setState({eventObj});
+  }
+
+// Submit event
+  async handleSubmit(event) {
+  event.preventDefault()
+
+  const {eventObj} = this.state
+  
+  if (!eventObj.title) {
+    alert('Title is required')
+    return false
+  }
+
+
+
+  // Setup contract connection
+  const contract = require('truffle-contract')
+  const ticketCrypt = contract(TicketCryptContract)
+  ticketCrypt.setProvider(this.state.web3.currentProvider)
+
+  // Declaring this for later so we can chain functions on TicketCrypt.
+  var ticketCryptInstance;
+
+  // Get accounts.
+  this.state.web3.eth.getAccounts((error, accounts) => {
+    ticketCrypt.deployed().then((instance) => {
+      ticketCryptInstance = instance
+
+      // Stores a given value, 5 by default.
+      return ticketCryptInstance._createEvent(eventObj.name, eventObj.price, eventObj.available, {from: accounts[0]})
+    }).then((result) => {
+      // Get the value from the contract to prove it worked.
+      return ticketCryptInstance.getEvent().call(accounts[0])
+    }).then((result) => {
+      // Update state with the result.
+      return this.setState({ storageValue: result.c[0] })
+    })
+  })
+// -------------------------------------------------------------
+}
 
 }
 EventCreator.propTypes = {
