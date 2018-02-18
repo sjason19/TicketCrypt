@@ -20,7 +20,6 @@ class Contract {
         console.error(error)
         return false
       }
-
       console.log('Event', log)
     })
   }
@@ -29,5 +28,28 @@ class Contract {
     this.account = account
   }
 
-  
+  createEvent(name, price, available) {
+  if (!this.instance) {
+    return Promise.reject()
+  }
+
+  return this.instance._createEvent(name, price, available {from: this.account})
+}
+
+async function init() {
+  contract = new Contract()
+
+  let instance = tc(EventCreator)
+
+  instance.setProvider(this.state.web3.currentProvider)
+  instance = await instance.deployed()
+
+  contract.setContractInstance(instance)
+
+  if (window.web3) {
+    contract.setAccount(web3.eth.defaultAccount || web3.eth.accounts[0])
+  }
+}
+
+
 }
