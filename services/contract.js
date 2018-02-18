@@ -10,4 +10,24 @@ class Contract {
     this.instance = null
     this.account = null
   }
+
+  setContractInstance(instance) {
+    this.instance = instance
+
+    this.instance.allEvents()
+    .watch((error, log) => {
+      if (error) {
+        console.error(error)
+        return false
+      }
+
+      console.log('Event', log)
+    })
+  }
+
+  setAccount (account) {
+    this.account = account
+  }
+
+  
 }
