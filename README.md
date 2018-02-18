@@ -87,6 +87,8 @@ cd TicketCrypt/src/utils/getWeb3.js
 
 var provider = new Web3.providers.HttpProvider('http://127.0.0.1:8545')
 ```
+## Architecture
+<img src="./img/ticketcrypt-architecture.png" width="400">
 
 ## Troubleshooting
 
