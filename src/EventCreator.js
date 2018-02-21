@@ -411,7 +411,7 @@ class EventCreator extends Component {
   event.preventDefault()
 
   const {eventObj} = this.state
-  
+
   if (!eventObj.title) {
     alert('Title is required')
     return false
@@ -449,5 +449,4 @@ class EventCreator extends Component {
 EventCreator.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-
-export default withStyles(styles)(EventCreator);
+module.exports = EventCreator;

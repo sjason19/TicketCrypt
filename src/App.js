@@ -1,121 +1,28 @@
-import React, { Component } from 'react'
-import TicketCryptContract from '../build/contracts/TicketCrypt.json'
-import getWeb3 from './utils/getWeb3'
-import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
+const React = require('react')
+const ReactDOM = require('react-dom')
 
+const {
+  HashRouter: Router,
+  Route,
+  Link
+} = require('react-router-dom')
 
-import './css/oswald.css'
-import './css/open-sans.css'
-import './css/pure-min.css'
-import './css/App.css'
+const EventCreator = require('./EventCreator.js')
+const MenuNavigator = require('./MenuNavigator.js')
 
-const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
-  input: {
-    display: 'none',
-  },
-});
-
-class App extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      storageValue: 0,
-      web3: null
-    }
-  }
-
-  componentWillMount() {
-    // Get network provider and web3 instance.
-    // See utils/getWeb3 for more info.
-
-    getWeb3
-    .then(results => {
-      this.setState({
-        web3: results.web3
-      })
-
-      // Instantiate contract once web3 provided.
-      this.instantiateContract()
-    })
-    .catch(() => {
-      console.log('Error finding web3.')
-    })
-  }
-
-  instantiateContract() {
-    /*
-     * SMART CONTRACT EXAMPLE
-     *
-     * Normally these functions would be called in the context of a
-     * state management library, but for convenience I've placed them here.
-     */
-
-    const contract = require('truffle-contract')
-    const ticketCrypt = contract(TicketCryptContract)
-    ticketCrypt.setProvider(this.state.web3.currentProvider)
-
-    // Declaring this for later so we can chain functions on TicketCrypt.
-    var ticketCryptInstance;
-
-    // Get accounts.
-    this.state.web3.eth.getAccounts((error, accounts) => {
-      ticketCrypt.deployed().then((instance) => {
-        ticketCryptInstance = instance
-
-        // Stores a given value, 5 by default.
-        return ticketCryptInstance.set(5, {from: accounts[0]})
-      }).then((result) => {
-        // Get the value from the contract to prove it worked.
-        return ticketCryptInstance.get.call(accounts[0])
-      }).then((result) => {
-        // Update state with the result.
-        return this.setState({ storageValue: result.c[0] })
-      })
-    })
-  }
-
-  onButtonPress() {
-    this.props.navigator.push({
-      id: 'EventCreator'
-    });
-  }
-
+class App extends React.Component {
   render() {
-    const { classes } = this.props;
     return (
-      <div className="App">
-        <nav className="navbar pure-menu pure-menu-horizontal">
-            <a href="#" className="pure-menu-heading pure-menu-link">Truffle Box</a>
-            <Button onPress={this.onButtonPress.bind(this)} variant="raised" color="primary" className={classes.button}>
-              New Event
-            </Button>
-        </nav>
-
-        <main className="container">
-          <div className="pure-g">
-            <div className="pure-u-1-1">
-              <h1>Good to Go!</h1>
-              <p>Your Truffle Box is installed and ready.</p>
-              <h2>Smart Contract Example</h2>
-              <p>If your contracts compiled and migrated successfully, below will show a stored value of 5 (by default).</p>
-              <p>Try changing the value stored on <strong>line 59</strong> of App.js.</p>
-              <p>The stored value is: {this.state.storageValue}</p>
-            </div>
-          </div>
-        </main>
-      </div>
-    );
+      <Router>
+        <div>
+        <MenuNavigator />
+        <div className="ui grid stackable padded MainContentContainer">
+          <Route exact path="/event/new" component={EventCreator}/>
+        </div>
+        </div>
+      </Router>
+    )
   }
 }
 
-App.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(App);
+module.exports = App;
