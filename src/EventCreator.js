@@ -449,4 +449,5 @@ class EventCreator extends Component {
 EventCreator.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-module.exports = EventCreator;
+
+export default withStyles(styles)(EventCreator);
