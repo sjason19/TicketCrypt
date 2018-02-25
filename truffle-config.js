@@ -2,8 +2,8 @@ module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // to customize your Truffle configuration!
 
-  //use with metamask
-  
+  // use with metamask
+
   // networks: {
   //   development: {
   //     host: "localhost",
@@ -11,4 +11,4 @@ module.exports = {
   //     network_id: "*" // Match any network id
   //   }
   // }
-};
+}

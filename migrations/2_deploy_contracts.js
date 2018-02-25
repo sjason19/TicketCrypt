@@ -1,5 +1,5 @@
-var TicketCrypt = artifacts.require("./TicketCrypt.sol");
+var TicketCrypt = artifacts.require('./TicketCrypt.sol')
 
-module.exports = function(deployer) {
-  deployer.deploy(TicketCrypt);
-};
+module.exports = function (deployer) {
+  deployer.deploy(TicketCrypt)
+}

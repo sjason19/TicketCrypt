@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import MenuNavigator from '../MenuNavigator'
+import MenuNavigator from '../components/MenuNavigator'
 
 it('renders without crashing', () => {
   const div = document.createElement('div')
