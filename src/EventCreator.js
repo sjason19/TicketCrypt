@@ -173,9 +173,6 @@ class EventCreator extends Component {
 
     return (
       <div className="EventCreator">
-        <nav className="navbar pure-menu pure-menu-horizontal">
-            <a href="#" className="pure-menu-heading pure-menu-link">Ticket Crypt</a>
-        </nav>
 
         <main className="container">
           <div className="pure-g">
@@ -411,7 +408,7 @@ class EventCreator extends Component {
   event.preventDefault()
 
   const {eventObj} = this.state
-  
+
   if (!eventObj.title) {
     alert('Title is required')
     return false
@@ -451,3 +448,4 @@ EventCreator.propTypes = {
 };
 
 export default withStyles(styles)(EventCreator);
+//module.exports = EventCreator
