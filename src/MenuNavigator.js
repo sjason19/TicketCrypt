@@ -21,7 +21,7 @@ class App extends React.Component {
           <Navbar.Header>
               <Navbar.Brand>
                 <Link to="/" className="item logo">
-                  TicketCrypt
+                  JOKES BRO
                 </Link>
               </Navbar.Brand>
             </Navbar.Header>
